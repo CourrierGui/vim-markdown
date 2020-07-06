@@ -2,6 +2,22 @@
 
 Markdown plugin for vim.
 
-# Issues
+# TODO
 
-* link/image: works if ]( not contained... is their way to force it to be there ?
+* LaTeX syntax;
+* LaTeX env autocomp ? folding ?
+* code block folding;
+* code block syntax depending on language;
+* html syntax;
+* html map ?;
+* html folding ?;
+* indentation;
+* folding;
+* list item completion (also for numbers);
+* numbered list automatic numbering;
+* improve highlight colors;
+* table auto format;
+* table map: add row, add column, go to heading...
+* moves: header, tables, links ?, ...
+* compilation map;
+* filter support: syntax, format...
