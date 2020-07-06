@@ -50,7 +50,7 @@ highlight markdownList          ctermfg=Red
 " Links
 " TODO: add options inside {}
 " force markdownLinkMiddle ?
-syntax region markdownLink start="\v\[" end="\v\)" contains=markdownUrl,markdownText,markdownLinkMiddle oneline
+syntax region markdownLink start="\v\[.*\]\(" end="\v\)" contains=markdownUrl,markdownText,markdownLinkMiddle oneline
 " TODO: improve url and text regexp
 syntax match markdownText "\v[^\)\[\]!]+"   contained
 syntax match markdownUrl "\v[A-Za-z]+\.com" contained
@@ -64,7 +64,7 @@ highlight link markdownText  Normal
 " Images
 " TODO: add options inside {}
 " force markdownLinkMiddle ?
-syntax region markdownImage start="\v!\[" end="\v\)" contains=markdownPath,markdownText,markdownLinkMiddle oneline
+syntax region markdownImage start="\v!\[.*\]\(" end="\v\)" contains=markdownPath,markdownText,markdownLinkMiddle oneline
 " TODO: improve path
 syntax match markdownPath "\v[A-Za-z_]+\.png" contained
 
@@ -85,6 +85,19 @@ highlight markdownTableHeader       ctermfg=Green
 highlight markdownTableRow          ctermfg=Gray
 highlight markdownTableText         ctermfg=Blue
 highlight markdownTableHeaderText   ctermfg=Red
+
+" LaTeX
+" Math
+" TODO: put latex syntax here
+syntax region markdownLatexInlineEq start="\v\$[^\$]" end="\v\$"
+syntax region markdownLatexEquation start="\v\$\$[^\$]" end="\v\$\$"
+
+highlight markdownLatexInlineEq ctermfg=Cyan    cterm=underline
+highlight markdownLatexEquation ctermfg=Magenta cterm=underline
+
+" begin/end env
+syntax region markdownLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}"
+highlight markdownLatexEnv cterm=bold
 
 " YAML metadata
 syntax region markdownYamlMetadata start="\v\%^---" end="\v---"

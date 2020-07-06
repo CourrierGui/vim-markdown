@@ -55,3 +55,23 @@ int main() {
 
 [link](somelink.com)
 ![image](some_image.png)
+
+$
+$$
+$$$$
+$$$
+text
+$1$
+text
+$$1$$
+bonjour
+
+text
+$$1$$
+text
+
+Before
+\begin{algin*}
+	inside
+\end{algin*}
+after
