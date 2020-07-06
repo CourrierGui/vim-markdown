@@ -4,6 +4,7 @@ Markdown plugin for vim.
 
 # TODO
 
+* doc;
 * LaTeX syntax;
 * LaTeX env autocomp ? folding ?
 * code block folding;
