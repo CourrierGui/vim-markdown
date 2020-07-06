@@ -49,7 +49,8 @@ highlight markdownList          ctermfg=Red
 
 " Links
 " TODO: add options inside {}
-syntax region markdownLink start="\v\[" end="\v\)" contains=markdownUrl,markdownText,markdownLinkMiddle
+" force markdownLinkMiddle ?
+syntax region markdownLink start="\v\[" end="\v\)" contains=markdownUrl,markdownText,markdownLinkMiddle oneline
 " TODO: improve url and text regexp
 syntax match markdownText "\v[^\)\[\]!]+"   contained
 syntax match markdownUrl "\v[A-Za-z]+\.com" contained
@@ -62,7 +63,8 @@ highlight link markdownText  Normal
 
 " Images
 " TODO: add options inside {}
-syntax region markdownImage start="\v!\[" end="\v\)" contains=markdownPath,markdownText,markdownLinkMiddle
+" force markdownLinkMiddle ?
+syntax region markdownImage start="\v!\[" end="\v\)" contains=markdownPath,markdownText,markdownLinkMiddle oneline
 " TODO: improve path
 syntax match markdownPath "\v[A-Za-z_]+\.png" contained
 
