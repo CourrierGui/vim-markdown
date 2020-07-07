@@ -83,3 +83,15 @@ Before
 	inside
 \end{algin*}
 after
+
+[@bonjour-toto]
+
+{#sec:my-fancy-section}
+{#eq:my-fancy-section}
+{#fig:my-fancy-section}
+
+[@eq:my-fancy-equation]
+[@fig:my-fancy-figure]
+[@sec:my-fancy-section]
+
+@eq:my-eqnos-ref

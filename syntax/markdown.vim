@@ -4,110 +4,127 @@ endif
 
 " TODO:
 " - HTML
-" - ref [@sec:...], @eq:..., [@fig:...], [@...:...]
 " - metadata
 " - yaml syntax
 " - code
 
 " YAML metadata
-syntax region markdownYamlMetadata start="\v\%^---\s*$" end="\v^---\s*$"
-highlight markdownYamlMetadata ctermfg=Blue
+syntax region mdYamlMetadata start="\v\%^---\s*$" end="\v^---\s*$"
+highlight mdYamlMetadata ctermfg=Blue
 
 " Recognize header
-syntax match markdownH1 "\v^(# .*$\n\s*|[^#]+$\n\=\=+\s*)$"
-syntax match markdownH2 "\v^(## .*$\n\s*|[^#]+$\n--+\s*)$"
-syntax match markdownH3 "\v^### .*$\n\s*$"
-syntax match markdownH4 "\v^#### .*$\n\s*$"
-syntax match markdownH5 "\v^##### .*$\n\s*$"
-syntax match markdownH6 "\v^###### .*$\n\s*$"
-syntax match markdownInvalidH "\v^#######+ .*$"
+syntax match mdH1 "\v^(# .*$\n\s*|[^#]+$\n\=\=+\s*)$"
+syntax match mdH2 "\v^(## .*$\n\s*|[^#]+$\n--+\s*)$"
+syntax match mdH3 "\v^### .*$\n\s*$"
+syntax match mdH4 "\v^#### .*$\n\s*$"
+syntax match mdH5 "\v^##### .*$\n\s*$"
+syntax match mdH6 "\v^###### .*$\n\s*$"
+syntax match mdInvalidH "\v^#######+ .*$"
 
-highlight markdownH1 cterm=bold ctermfg=Red
-highlight markdownH2 cterm=bold ctermfg=Red
-highlight markdownH3 cterm=bold ctermfg=Red
-highlight markdownH4 cterm=bold ctermfg=Red
-highlight markdownH5 cterm=bold ctermfg=Red
-highlight markdownH6 cterm=bold ctermfg=Red
-highlight link markdownInvalidH Normal
+highlight mdH1 cterm=bold ctermfg=Red
+highlight mdH2 cterm=bold ctermfg=Red
+highlight mdH3 cterm=bold ctermfg=Red
+highlight mdH4 cterm=bold ctermfg=Red
+highlight mdH5 cterm=bold ctermfg=Red
+highlight mdH6 cterm=bold ctermfg=Red
+highlight link mdInvalidH Normal
 
 " Strikethrough, quote, code and code blocks
-syntax match markdownStrikeThrough "\v\~\~.+\~\~"
-syntax match markdownQuote "\v\>.+$"
-syntax match markdownInlineCode "\v`.+`"
-syntax region markdownBlockCode start="\v```" end="\v```" fold
+syntax match mdStrikeThrough "\v\~\~.+\~\~"
+syntax match mdQuote "\v\>.+$"
+syntax match mdInlineCode "\v`.+`"
+syntax region mdBlockCode start="\v```" end="\v```" fold
 
 " Bold, Italic
-syntax match markdownItalic "\v(\*.+\*|_.+_)"
-syntax match markdownBold "\v(\*\*.+\*\*|__.+__)"
+syntax match mdItalic "\v(\*.+\*|_.+_)"
+syntax match mdBold "\v(\*\*.+\*\*|__.+__)"
 
 " Lists
-syntax match markdownList "\v(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
+syntax match mdList "\v(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
 
-highlight markdownBold          cterm=bold
-highlight markdownItalic        cterm=italic
-highlight markdownStrikeThrough cterm=strikethrough
-highlight markdownInlineCode    ctermfg=Red
-highlight markdownBlockCode     ctermfg=Red
-highlight markdownQuote         ctermfg=Grey
-highlight markdownList          ctermfg=Red
+highlight mdBold          cterm=bold
+highlight mdItalic        cterm=italic
+highlight mdStrikeThrough cterm=strikethrough
+highlight mdInlineCode    ctermfg=Red
+highlight mdBlockCode     ctermfg=Red
+highlight mdQuote         ctermfg=Grey
+highlight mdList          ctermfg=Red
 
 " Links
-" TODO: add options inside {}
-" force markdownLinkMiddle ?
-syntax region markdownLink start="\v\[.*\]\(" end="\v\)( \{.+\})?"
-	\ contains=markdownUrl,markdownText,markdownLinkMiddle oneline
+" TODO: option syntax inside {}
+syntax region mdLink start="\v\[.*\]\(" end="\v\)( \{.+\})?"
+	\ contains=mdUrl,mdText,mdLinkMiddle oneline
 " TODO: improve url and text regexp
-syntax match markdownText "\v[^\)\[\]!\{\}#]+" contained
-syntax match markdownUrl
+syntax match mdText "\v[^\)\[\]!\{\}#]+" contained
+syntax match mdUrl
 	\ "\v(https?://)?(www.)?[-a-zA-Z0-9_]{1,256}(\.[a-zA-Z_]{1,6})+(/[-a-zA-Z0-9_]+)*/?" contained
-syntax match markdownLinkMiddle "\v\]\("    contained
+syntax match mdLinkMiddle "\v\]\("    contained
 
-highlight markdownLink       ctermfg=Red
-highlight markdownLinkMiddle ctermfg=Red
-highlight markdownUrl        cterm=underline ctermfg=Cyan
-highlight link markdownText  Normal
+highlight mdLink       ctermfg=Red
+highlight mdLinkMiddle ctermfg=Red
+highlight mdUrl        cterm=underline ctermfg=Cyan
+highlight link mdText  Normal
 
 " Images
-syntax region markdownImage start="\v!\[.*\]\(" end="\v\)( \{.+\})?"
-	\ contains=markdownPath,markdownText,markdownLinkMiddle,markdownOptionBrackets oneline
+syntax region mdImage start="\v!\[.*\]\(" end="\v\)( \{.+\})?"
+	\ contains=mdPath,mdText,mdLinkMiddle,mdOptionBrackets oneline
 " TODO: should space be escaped ?
-syntax match markdownPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+" contained
-syntax region markdownOptionBrackets start="\v\s\{" end="\v\}"
-	\ contained containedin=markdownImage oneline contains=markdownText
+syntax match mdPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+" contained
+syntax region mdOptionBrackets start="\v\s\{" end="\v\}"
+	\ contained containedin=mdImage oneline contains=mdText
 
-highlight markdownOptionBrackets ctermfg=Red
-highlight markdownImage          ctermfg=Red
-highlight markdownPath           ctermfg=Cyan
-highlight link markdownText      Normal
+highlight mdOptionBrackets ctermfg=Red
+highlight mdImage          ctermfg=Red
+highlight mdPath           ctermfg=Cyan
+highlight link mdText      Normal
 
 " Tables
 " TODO: is it possible to handle column width ?
 " TODO: improve this in order to allow =, - and + in TableRowText and TableHeaderText
-syntax region markdownTableRow    start="\v\|(.*\|)+\s*$" end="\v\+(-+\+)+\s*$"  contains=markdownTableText
-syntax region markdownTableHeader start="\v\+(-+\+)+\s*$" end="\v\+(\=+\+)+\s*$" contains=markdownTableHeaderText
+syntax region mdTableRow    start="\v\|(.*\|)+\s*$" end="\v\+(-+\+)+\s*$"  contains=mdTableText
+syntax region mdTableHeader start="\v\+(-+\+)+\s*$" end="\v\+(\=+\+)+\s*$" contains=mdTableHeaderText
 
 " TODO: text ascii input ?
-syntax match markdownTableText       "\v[^\|\-\+\=]+"
-	\ contained containedin=markdownTableRow contains=markdownLatexInlineEq
-syntax match markdownTableHeaderText "\v[^\|\-\+\=]+"
-	\ contained containedin=markdownTableHeader
+syntax match mdTableText       "\v[^\|\-\+\=]+"
+	\ contained containedin=mdTableRow contains=mdLatexInlineEq
+syntax match mdTableHeaderText "\v[^\|\-\+\=]+"
+	\ contained containedin=mdTableHeader
 
-highlight markdownTableHeader       ctermfg=Green
-highlight markdownTableRow          ctermfg=Gray
-highlight markdownTableText         ctermfg=Blue
-highlight markdownTableHeaderText   ctermfg=Red
+highlight mdTableHeader     ctermfg=Green
+highlight mdTableRow        ctermfg=Gray
+highlight mdTableText       ctermfg=Blue
+highlight mdTableHeaderText ctermfg=Red
 
 " LaTeX
 " Math
 " TODO: put latex syntax here
-syntax region markdownLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$"
-syntax region markdownLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$"
+syntax region mdLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$"
+syntax region mdLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$"
 
-highlight markdownLatexInlineEq ctermfg=Cyan    cterm=underline
-highlight markdownLatexEquation ctermfg=Magenta cterm=underline
+highlight mdLatexInlineEq ctermfg=Cyan    cterm=underline
+highlight mdLatexEquation ctermfg=Magenta cterm=underline
 
-" begin/end env
-syntax region markdownLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}"
-highlight markdownLatexEnv cterm=bold
+" begin/end LaTeX env
+syntax region mdLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}"
+highlight mdLatexEnv cterm=bold
+
+" references: [@sec:...], @eq:..., [@fig:...], [@...:...]
+
+syntax match mdCiteProcRef "\v\[\@\S+\]"        contains=mdRefText
+syntax match mdCrossRef    "\v\[\@[a-z]+:\S+\]" contains=mdRefText,mdRefKeyword
+syntax match mdRefDef      "\v\{#[a-z]+:.+\}"   contains=mdRefText,mdRefKeyword
+syntax match mdRefText     "\v[-0-9A-Za-z]+"
+	\ contained containedin=mdCiteProcRef,mdCrossRef contains=mdRefKeyword
+syntax match mdEqnosRef "\v\@[a-z]+:[-a-zA-Z0-9]+" contains=mdRefKeyword,mdRefText
+
+syntax keyword mdRefKeyword eq sec fig contained containedin=mdRefText
+
+highlight mdCiteProcRef ctermfg=Yellow
+highlight mdCrossRef    ctermfg=Yellow
+highlight mdRefDef      ctermfg=Yellow
+highlight mdEqnosRef    ctermfg=Yellow
+
+highlight mdRefText     ctermfg=Cyan
+highlight mdRefKeyword  ctermfg=Gray
 
 let b:current_syntax = "markdown"
