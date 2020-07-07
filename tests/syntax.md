@@ -52,9 +52,17 @@ int main() {
 +---------------+-----------------+----------------+
 | Text          |     Text        |        Text    |
 +---------------+-----------------+----------------+
+| $1 + 1$       |     Text        |        Text    |
++---------------+-----------------+----------------+
 
-[link](somelink.com)
-![image](some_image.png)
+[link](https://www.some-link.rezometz.org/to-to/ti_ti/)
+![image](some-image.jpeg)
+![image](/fu-ll/pa_th/to/some-image.jpeg)
+![image](~/path/from/home/some-image.jpeg)
+![image](relative/path/to/some-image.jpeg)
+
+![image](some-image.jpeg) {#ref option=value}
+[link](https://www.some-link.rezometz.org/to-to/ti_ti/) {#toto option=value}
 
 $
 $$

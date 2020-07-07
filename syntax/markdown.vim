@@ -9,6 +9,10 @@ endif
 " - yaml syntax
 " - code
 
+" YAML metadata
+syntax region markdownYamlMetadata start="\v\%^---\s*$" end="\v^---\s*$"
+highlight markdownYamlMetadata ctermfg=Blue
+
 " Recognize header
 syntax match markdownH1 "\v^(# .*$\n\s*|[^#]+$\n\=\=+\s*)$"
 syntax match markdownH2 "\v^(## .*$\n\s*|[^#]+$\n--+\s*)$"
@@ -50,10 +54,12 @@ highlight markdownList          ctermfg=Red
 " Links
 " TODO: add options inside {}
 " force markdownLinkMiddle ?
-syntax region markdownLink start="\v\[.*\]\(" end="\v\)" contains=markdownUrl,markdownText,markdownLinkMiddle oneline
+syntax region markdownLink start="\v\[.*\]\(" end="\v\)( \{.+\})?"
+	\ contains=markdownUrl,markdownText,markdownLinkMiddle oneline
 " TODO: improve url and text regexp
-syntax match markdownText "\v[^\)\[\]!]+"   contained
-syntax match markdownUrl "\v[A-Za-z]+\.com" contained
+syntax match markdownText "\v[^\)\[\]!\{\}#]+" contained
+syntax match markdownUrl
+	\ "\v(https?://)?(www.)?[-a-zA-Z0-9_]{1,256}(\.[a-zA-Z_]{1,6})+(/[-a-zA-Z0-9_]+)*/?" contained
 syntax match markdownLinkMiddle "\v\]\("    contained
 
 highlight markdownLink       ctermfg=Red
@@ -62,15 +68,17 @@ highlight markdownUrl        cterm=underline ctermfg=Cyan
 highlight link markdownText  Normal
 
 " Images
-" TODO: add options inside {}
-" force markdownLinkMiddle ?
-syntax region markdownImage start="\v!\[.*\]\(" end="\v\)" contains=markdownPath,markdownText,markdownLinkMiddle oneline
-" TODO: improve path
-syntax match markdownPath "\v[A-Za-z_]+\.png" contained
+syntax region markdownImage start="\v!\[.*\]\(" end="\v\)( \{.+\})?"
+	\ contains=markdownPath,markdownText,markdownLinkMiddle,markdownOptionBrackets oneline
+" TODO: should space be escaped ?
+syntax match markdownPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+" contained
+syntax region markdownOptionBrackets start="\v\s\{" end="\v\}"
+	\ contained containedin=markdownImage oneline contains=markdownText
 
-highlight markdownImage      ctermfg=Red
-highlight markdownPath       ctermfg=Cyan
-highlight link markdownText  Normal
+highlight markdownOptionBrackets ctermfg=Red
+highlight markdownImage          ctermfg=Red
+highlight markdownPath           ctermfg=Cyan
+highlight link markdownText      Normal
 
 " Tables
 " TODO: is it possible to handle column width ?
@@ -79,8 +87,10 @@ syntax region markdownTableRow    start="\v\|(.*\|)+\s*$" end="\v\+(-+\+)+\s*$" 
 syntax region markdownTableHeader start="\v\+(-+\+)+\s*$" end="\v\+(\=+\+)+\s*$" contains=markdownTableHeaderText
 
 " TODO: text ascii input ?
-syntax match markdownTableText       "\v[^\|\-\+\=]+" contained containedin=markdownTableRow
-syntax match markdownTableHeaderText "\v[^\|\-\+\=]+" contained containedin=markdownTableHeader
+syntax match markdownTableText       "\v[^\|\-\+\=]+"
+	\ contained containedin=markdownTableRow contains=markdownLatexInlineEq
+syntax match markdownTableHeaderText "\v[^\|\-\+\=]+"
+	\ contained containedin=markdownTableHeader
 
 highlight markdownTableHeader       ctermfg=Green
 highlight markdownTableRow          ctermfg=Gray
@@ -99,9 +109,5 @@ highlight markdownLatexEquation ctermfg=Magenta cterm=underline
 " begin/end env
 syntax region markdownLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}"
 highlight markdownLatexEnv cterm=bold
-
-" YAML metadata
-syntax region markdownYamlMetadata start="\v\%^---\s*$" end="\v^---\s*$"
-highlight markdownYamlMetadata ctermfg=Blue
 
 let b:current_syntax = "markdown"
