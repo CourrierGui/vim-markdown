@@ -1,6 +1,6 @@
 # vim-markdown
 
-Markdown plugin for vim. This plugin only support Pandoc's flavor of Markdown.
+Markdown plugin for vim. This plugin is designed for Pandoc's flavor of Markdown.
 
 # TODO
 
