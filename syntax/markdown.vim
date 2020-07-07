@@ -52,8 +52,8 @@ highlight mdList          ctermfg=Red
 
 " Links
 " TODO: option syntax inside {}
-syntax region mdLink start="\v\[.*\]\(" end="\v\)( \{.+\})?"
-	\ contains=mdUrl,mdText,mdLinkMiddle oneline
+syntax match mdLink "\v\[.+\]\(.+\)( \{.+\})?"
+	\ contains=mdUrl,mdText,mdLinkMiddle
 " TODO: improve url and text regexp
 syntax match mdText "\v[^\)\[\]!\{\}#]+" contained
 syntax match mdUrl
@@ -66,8 +66,8 @@ highlight mdUrl        cterm=underline ctermfg=Cyan
 highlight link mdText  Normal
 
 " Images
-syntax region mdImage start="\v!\[.*\]\(" end="\v\)( \{.+\})?"
-	\ contains=mdPath,mdText,mdLinkMiddle,mdOptionBrackets oneline
+syntax match mdImage "\v!\[.+\]\(.+\)( \{.+\})?"
+	\ contains=mdPath,mdText,mdLinkMiddle,mdOptionBrackets
 " TODO: should space be escaped ?
 syntax match mdPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+" contained
 syntax region mdOptionBrackets start="\v\s\{" end="\v\}"
