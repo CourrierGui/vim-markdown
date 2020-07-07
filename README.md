@@ -1,6 +1,6 @@
 # vim-markdown
 
-Markdown plugin for vim.
+Markdown plugin for vim. This plugin only support Pandoc's flavor of Markdown.
 
 # TODO
 
@@ -22,3 +22,10 @@ Markdown plugin for vim.
 * moves: header, tables, links ?, ...
 * compilation map;
 * filter support: syntax, format...
+
+# Options
+
+* choose which filter to use: syntax, include in build command;
+* build command: choose csl, .bib, template files;
+* option to convert to LaTeX ?
+* toggle between beamer and article;
