@@ -90,8 +90,8 @@ highlight markdownTableHeaderText   ctermfg=Red
 " LaTeX
 " Math
 " TODO: put latex syntax here
-syntax region markdownLatexInlineEq start="\v\$[^\$]" end="\v\$"
-syntax region markdownLatexEquation start="\v\$\$[^\$]" end="\v\$\$"
+syntax region markdownLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$"
+syntax region markdownLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$"
 
 highlight markdownLatexInlineEq ctermfg=Cyan    cterm=underline
 highlight markdownLatexEquation ctermfg=Magenta cterm=underline
