@@ -74,12 +74,13 @@ highlight link markdownText  Normal
 
 " Tables
 " TODO: is it possible to handle column width ?
-syntax region markdownTableRow    start="\v\|" end="\v\+(-+\+)+"         contains=markdownTableText
-syntax region markdownTableHeader start="\v\+(-+\+)+" end="\v\+(\=+\+)+" contains=markdownTableHeaderText
+" TODO: improve this in order to allow =, - and + in TableRowText and TableHeaderText
+syntax region markdownTableRow    start="\v\|(.*\|)+\s*$" end="\v\+(-+\+)+\s*$"  contains=markdownTableText
+syntax region markdownTableHeader start="\v\+(-+\+)+\s*$" end="\v\+(\=+\+)+\s*$" contains=markdownTableHeaderText
 
 " TODO: text ascii input ?
-syntax match markdownTableText       "\v[A-Za-z0-9éà ]+" contained containedin=markdownTableRow
-syntax match markdownTableHeaderText "\v[A-Za-z0-9éà ]+" contained containedin=markdownTableHeader
+syntax match markdownTableText       "\v[^\|\-\+\=]+" contained containedin=markdownTableRow
+syntax match markdownTableHeaderText "\v[^\|\-\+\=]+" contained containedin=markdownTableHeader
 
 highlight markdownTableHeader       ctermfg=Green
 highlight markdownTableRow          ctermfg=Gray
@@ -100,7 +101,7 @@ syntax region markdownLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}"
 highlight markdownLatexEnv cterm=bold
 
 " YAML metadata
-syntax region markdownYamlMetadata start="\v\%^---" end="\v---"
+syntax region markdownYamlMetadata start="\v\%^---\s*$" end="\v^---\s*$"
 highlight markdownYamlMetadata ctermfg=Blue
 
 let b:current_syntax = "markdown"

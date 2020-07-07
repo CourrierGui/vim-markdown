@@ -29,3 +29,5 @@ Markdown plugin for vim. This plugin is designed for Pandoc's flavor of Markdown
 * build command: choose csl, .bib, template files;
 * option to convert to LaTeX ?
 * toggle between beamer and article;
+
+* vim: h syn-conceal
