@@ -26,15 +26,23 @@ __more bold__
 *italic*
 _more italic_
 ~~strikethrough~~
-
 `Some inline code`
+> this is a quote
+
+_this is
+a multiline text
+in italic_
+
+**this is a multiline
+text
+in bold**
+
 ```cpp
 int main() {
 	return 0;
 }
 ```
 
-> this is a quote
 
 * This is a list item
 + another one

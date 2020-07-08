@@ -29,25 +29,33 @@ highlight mdH5 cterm=bold ctermfg=Red
 highlight mdH6 cterm=bold ctermfg=Red
 highlight link mdInvalidH Normal
 
+
 " Strikethrough, quote, code and code blocks
-syntax match mdStrikeThrough "\v\~\~.+\~\~"
-syntax match mdQuote "\v\>.+$"
-syntax match mdInlineCode "\v`.+`"
+" Bold, Italic
+" syntax match mdItalic "\v(\*.+\*|_.+_)"
+" syntax match  mdBold "\v(\*\*.+\*\*|__.+__)"
+" syntax match mdStrikeThrough "\v\~\~.+\~\~"
+" syntax match mdInlineCode "\v`.+`"
+" syntax match mdQuote "\v\>.+$"
+syntax region mdItalic        concealends matchgroup=mdFormat start="\v(_|\*)"    end="\v(_|\*)"
+syntax region mdBold          concealends matchgroup=mdFormat start="\v(__|\*\*)" end="\v(__|\*\*)"
+syntax region mdStrikeThrough concealends matchgroup=mdFormat start="\v\~\~"      end="\v\~\~"
+syntax region mdInlineCode    concealends matchgroup=mdFormat start="\v`"         end="\v`"
+syntax region mdQuote         concealends matchgroup=mdFormat start="\v\> "       end="\v$" oneline
+
 syntax region mdBlockCode start="\v```" end="\v```" fold
 
-" Bold, Italic
-syntax match mdItalic "\v(\*.+\*|_.+_)"
-syntax match mdBold "\v(\*\*.+\*\*|__.+__)"
+highlight link mdFormat   Normal
+highlight mdItalic        cterm=italic
+highlight mdBold          cterm=bold
+highlight mdStrikeThrough cterm=strikethrough
+highlight mdInlineCode    ctermfg=Red
+highlight mdQuote         ctermfg=Grey
 
 " Lists
 syntax match mdList "\v^\s*(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
 
-highlight mdBold          cterm=bold
-highlight mdItalic        cterm=italic
-highlight mdStrikeThrough cterm=strikethrough
-highlight mdInlineCode    ctermfg=Red
 highlight mdBlockCode     ctermfg=Red
-highlight mdQuote         ctermfg=Grey
 highlight mdList          ctermfg=Red
 
 " Links
