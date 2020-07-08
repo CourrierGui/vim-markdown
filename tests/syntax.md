@@ -99,7 +99,7 @@ after
 {#fig:my-fancy-section}
 
 [@eq:my-fancy-equation]
-[@fig:my-fancy-figure]
+[-@fig:my-fancy-figure]
 [@sec:my-fancy-section]
 
 @eq:my-eqnos-ref

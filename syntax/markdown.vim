@@ -32,11 +32,6 @@ highlight link mdInvalidH Normal
 
 " Strikethrough, quote, code and code blocks
 " Bold, Italic
-" syntax match mdItalic "\v(\*.+\*|_.+_)"
-" syntax match  mdBold "\v(\*\*.+\*\*|__.+__)"
-" syntax match mdStrikeThrough "\v\~\~.+\~\~"
-" syntax match mdInlineCode "\v`.+`"
-" syntax match mdQuote "\v\>.+$"
 syntax region mdItalic        concealends matchgroup=mdFormat start="\v(_|\*)"    end="\v(_|\*)"
 syntax region mdBold          concealends matchgroup=mdFormat start="\v(__|\*\*)" end="\v(__|\*\*)"
 syntax region mdStrikeThrough concealends matchgroup=mdFormat start="\v\~\~"      end="\v\~\~"
@@ -112,7 +107,7 @@ highlight mdLatexEnv cterm=bold
 " references: [@sec:...], @eq:..., [@fig:...], [@...:...]
 
 syntax match mdCiteProcRef "\v\[\@\S+\]"        contains=mdRefText
-syntax match mdCrossRef    "\v\[\@[a-z]+:\S+\]" contains=mdRefText,mdRefKeyword
+syntax match mdCrossRef    "\v\[-?\@[a-z]+:\S+\]" contains=mdRefText,mdRefKeyword
 syntax match mdRefDef      "\v\{#[a-z]+:.+\}"   contains=mdRefText,mdRefKeyword
 syntax match mdRefText     "\v[-0-9A-Za-z]+"    contained containedin=mdCiteProcRef,mdCrossRef contains=mdRefKeyword
 syntax match mdEqnosRef    "\v\@[a-z]+:[-a-zA-Z0-9]+" contains=mdRefKeyword,mdRefText
