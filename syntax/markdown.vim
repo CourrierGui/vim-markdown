@@ -40,7 +40,7 @@ syntax match mdItalic "\v(\*.+\*|_.+_)"
 syntax match mdBold "\v(\*\*.+\*\*|__.+__)"
 
 " Lists
-syntax match mdList "\v(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
+syntax match mdList "\v^\s*(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
 
 highlight mdBold          cterm=bold
 highlight mdItalic        cterm=italic
