@@ -3,12 +3,12 @@ if exists("b:current_syntax")
 endif
 
 " Recognize header
-syntax match mdH1 "\v^(# .*$\n\s*|[^#]+$\n\=\=+\s*)$"
-syntax match mdH2 "\v^(## .*$\n\s*|[^#]+$\n--+\s*)$"
-syntax match mdH3 "\v^### .*$\n\s*$"
-syntax match mdH4 "\v^#### .*$\n\s*$"
-syntax match mdH5 "\v^##### .*$\n\s*$"
-syntax match mdH6 "\v^###### .*$\n\s*$"
+syntax match mdH1 "\v^(# .*$\n\s*|[^#]+( \{.+\})?$\n\=\=+\s*)$" contains=mdLatexInlineEq,mdRefDef
+syntax match mdH2 "\v^(## .*$\n\s*|[^#]+( \{.+\})?$\n--+\s*)$" contains=mdLatexInlineEq,mdRefDef
+syntax match mdH3 "\v^### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
+syntax match mdH4 "\v^#### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
+syntax match mdH5 "\v^##### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
+syntax match mdH6 "\v^###### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
 syntax match mdInvalidH "\v^#######+ .*$"
 
 highlight mdH1 cterm=bold ctermfg=Red
@@ -63,7 +63,7 @@ highlight link mdText  Normal
 " Images
 syntax match mdImage "\v!\[.+\]\(.+\)( \{.+\})?" contains=mdPath,mdText,mdOptionBrackets
 " TODO: should space be escaped ?
-syntax match mdPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+" contained
+syntax match  mdPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+"  contained
 syntax region mdOptionBrackets start="\v\s\{" end="\v\}" contained containedin=mdImage oneline contains=mdText
 
 highlight mdOptionBrackets ctermfg=Red
@@ -123,7 +123,7 @@ syntax include @yamlTop syntax/yaml.vim
 syntax region mdYamlMetadata start="\v%^---\s*$" end="\v^---\s*$" contains=@yamlTop keepend
 unlet! b:current_syntax
 
-" HTLM
+" HTML
 syntax include @html syntax/html.vim
 syntax region mdHTML start="\v\<" end="\v\>" contains=@html keepend
 unlet! b:current_syntax

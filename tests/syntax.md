@@ -3,23 +3,23 @@ string: "a string"
 - item: "1"
 ---
 
-# H1
+# H1 $1 + 1$ {#sec:ref}
 
-H1
+H1 {#sec:this}
 ==
 
-## H2
+## H2 $\alpha$
 
-H2
+H2 {#sec:ref2}
 --
 
-### H3
+### H3 $\beta$
 
-#### H4
+#### H4 {#sec:ref4}
 
-##### H5
+##### H5 $\Pi$ {#sec:ref5 .numbered}
 
-###### H6
+###### H6 $1+1$
 
 ####### H7
 
