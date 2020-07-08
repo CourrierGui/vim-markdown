@@ -1,4 +1,6 @@
 ---
+string: "a string"
+- item: "1"
 ---
 
 # H1
@@ -38,7 +40,9 @@ text
 in bold**
 
 ```cpp
-int main() {
+#include <toto>
+
+int main(int argc, char** argv) {
 	return 0;
 }
 ```
@@ -77,20 +81,28 @@ $$
 $$$$
 $$$
 text
-$1$
+$\alpha + \beta_j$
 text
 $$1$$
 bonjour
 
+$\sum_{j=1}^n a_i$
+
 text
 $$1$$
 text
 
-Before
 \begin{algin*}
-	inside
+	\beta_i + 1
 \end{algin*}
-after
+
+\textsc{Test}
+\test
+\test{}
+
+$$1 < 2$$
+
+<b>bonjour</b>
 
 [@bonjour-toto]
 

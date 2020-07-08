@@ -2,16 +2,6 @@ if exists("b:current_syntax")
 	finish
 endif
 
-" TODO:
-" - HTML
-" - metadata
-" - yaml syntax
-" - code
-
-" YAML metadata
-syntax region mdYamlMetadata start="\v\%^---\s*$" end="\v^---\s*$"
-highlight mdYamlMetadata ctermfg=Blue
-
 " Recognize header
 syntax match mdH1 "\v^(# .*$\n\s*|[^#]+$\n\=\=+\s*)$"
 syntax match mdH2 "\v^(## .*$\n\s*|[^#]+$\n--+\s*)$"
@@ -29,8 +19,7 @@ highlight mdH5 cterm=bold ctermfg=Red
 highlight mdH6 cterm=bold ctermfg=Red
 highlight link mdInvalidH Normal
 
-
-" Strikethrough, quote, code and code blocks
+" Strikethrough, quote, code
 " Bold, Italic
 syntax region mdItalic        concealends matchgroup=mdFormat start="\v(_|\*)"    end="\v(_|\*)"
 syntax region mdBold          concealends matchgroup=mdFormat start="\v(__|\*\*)" end="\v(__|\*\*)"
@@ -38,7 +27,6 @@ syntax region mdStrikeThrough concealends matchgroup=mdFormat start="\v\~\~"    
 syntax region mdInlineCode    concealends matchgroup=mdFormat start="\v`"         end="\v`"
 syntax region mdQuote         concealends matchgroup=mdFormat start="\v\> "       end="\v$" oneline
 
-syntax region mdBlockCode start="\v```" end="\v```" fold
 
 highlight link mdFormat   Normal
 highlight mdItalic        cterm=italic
@@ -49,12 +37,20 @@ highlight mdQuote         ctermfg=Grey
 
 " Lists
 syntax match mdList "\v^\s*(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
+highlight mdList      ctermfg=Red
 
-highlight mdBlockCode     ctermfg=Red
-highlight mdList          ctermfg=Red
+" Block of code
+syntax region mdBlockCode start="\v```" end="\v```" fold
+
+highlight mdBlockCode ctermfg=Red
+
+" C/C++ code in code blocks
+syntax include @c syntax/cpp.vim
+syntax region mdBlockCode start="\v```(c|cpp)" end="\v```" fold contains=@c keepend
+unlet! b:current_syntax
 
 " Links
-" TODO: option syntax inside {}
+" TODO: option syntax inside {} / for titles too
 syntax match mdLink "\v\[.+\]\(.+\)( \{.+\})?" contains=mdUrl,mdText
 " TODO: improve url and text regexp
 syntax match mdText "\v[^\(\)\[\]!\{\}#]+" contained
@@ -91,25 +87,24 @@ highlight mdTableRow        ctermfg=Gray
 highlight mdTableText       ctermfg=Blue
 highlight mdTableHeaderText ctermfg=Red
 
-" LaTeX
+" Import LaTeX syntax
+syntax include @tex syntax/tex.vim
+
 " Math
-" TODO: put latex syntax here
-syntax region mdLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$"
-syntax region mdLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$"
+syntax region mdLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$" contains=@tex keepend
+syntax region mdLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$" contains=@tex keepend
 
-highlight mdLatexInlineEq ctermfg=Cyan    cterm=underline
-highlight mdLatexEquation ctermfg=Magenta cterm=underline
+" begin/end LaTeX env/function
+syntax match mdLatexFunc "\v\\[a-z]+(\{(.+)?\})?" contains=@tex keepend
+syntax region mdLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}" contains=@tex keepend
 
-" begin/end LaTeX env
-syntax region mdLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}"
-highlight mdLatexEnv cterm=bold
+unlet! b:current_syntax
 
 " references: [@sec:...], @eq:..., [@fig:...], [@...:...]
-
-syntax match mdCiteProcRef "\v\[\@\S+\]"        contains=mdRefText
-syntax match mdCrossRef    "\v\[-?\@[a-z]+:\S+\]" contains=mdRefText,mdRefKeyword
-syntax match mdRefDef      "\v\{#[a-z]+:.+\}"   contains=mdRefText,mdRefKeyword
-syntax match mdRefText     "\v[-0-9A-Za-z]+"    contained containedin=mdCiteProcRef,mdCrossRef contains=mdRefKeyword
+syntax match mdCiteProcRef "\v\[\@\S+\]"             contains=mdRefText
+syntax match mdCrossRef    "\v\[-?\@[a-z]+:\S+\]"    contains=mdRefText,mdRefKeyword
+syntax match mdRefDef      "\v\{#[a-z]+:.+\}"        contains=mdRefText,mdRefKeyword
+syntax match mdRefText     "\v[-0-9A-Za-z]+"         contained containedin=mdCiteProcRef,mdCrossRef contains=mdRefKeyword
 syntax match mdEqnosRef    "\v\@[a-z]+:[-a-zA-Z0-9]+" contains=mdRefKeyword,mdRefText
 
 syntax keyword mdRefKeyword eq sec fig contained containedin=mdRefText
@@ -121,5 +116,16 @@ highlight mdEqnosRef    ctermfg=Yellow
 
 highlight mdRefText     ctermfg=Cyan
 highlight mdRefKeyword  ctermfg=Gray
+
+" YAML metadata
+syntax include @yamlTop syntax/yaml.vim
+" syn region Comment matchgroup=mkdDelimiter start="\%^---$" end="^\(---\|\.\.\.\)$" contains=@yamlTop keepend
+syntax region mdYamlMetadata start="\v%^---\s*$" end="\v^---\s*$" contains=@yamlTop keepend
+unlet! b:current_syntax
+
+" HTLM
+syntax include @html syntax/html.vim
+syntax region mdHTML start="\v\<" end="\v\>" contains=@html keepend
+unlet! b:current_syntax
 
 let b:current_syntax = "markdown"
