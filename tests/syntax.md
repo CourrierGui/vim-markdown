@@ -47,7 +47,6 @@ int main(int argc, char** argv) {
 }
 ```
 
-
 * This is a list item
 + another one
 - a **bold** item

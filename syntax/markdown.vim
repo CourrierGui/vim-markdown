@@ -82,7 +82,7 @@ syntax match   mdCrossRef    "\v\[-?\@[a-z]+:\S+\]"     contains=mdRefText,mdRef
 syntax match   mdRefDef      "\v\{#[a-z]+:.+\}"         contains=mdRefText,mdRefKeyword
 syntax match   mdRefText     "\v[-0-9A-Za-z]+"          contains=mdRefKeyword contained containedin=mdCiteProcRef,mdCrossRef
 syntax match   mdEqnosRef    "\v\@[a-z]+:[-a-zA-Z0-9]+" contains=mdRefKeyword,mdRefText
-syntax keyword mdRefKeyword  eq sec fig                 containedin=mdRefText contained
+syntax keyword mdRefKeyword  eq sec fig tab             containedin=mdRefText contained
 
 " YAML metadata
 if get(g:, 'vim_markdown_yaml', 0)
@@ -124,17 +124,17 @@ highlight link mdText        Normal
 highlight link mdUrl  Underlined
 highlight link mdPath StorageClass
 
-highlight mdTableHeader     ctermfg=Green
-highlight mdTableRow        ctermfg=Gray
-highlight mdTableText       ctermfg=Blue
-highlight mdTableHeaderText ctermfg=Red
+highlight link mdTableHeader     rubyInstanceVariable
+highlight link mdTableRow        rubyBlockParameter
+highlight link mdTableHeaderText Function
+highlight link mdTableText       Normal
 
-highlight mdCiteProcRef ctermfg=Yellow
-highlight mdCrossRef    ctermfg=Yellow
-highlight mdEqnosRef    ctermfg=Yellow
+highlight link mdCiteProcRef mdSpecialChar
+highlight link mdCrossRef    mdSpecialChar
+highlight link mdEqnosRef    mdSpecialChar
 
-highlight mdRefDef     ctermfg=Yellow
-highlight mdRefText    ctermfg=Cyan
-highlight mdRefKeyword ctermfg=Gray
+highlight link mdRefDef     mdSpecialChar
+highlight link mdRefText    Normal
+highlight link mdRefKeyword Function
 
 let b:current_syntax = "markdown"
