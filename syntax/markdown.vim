@@ -2,22 +2,25 @@ if exists("b:current_syntax")
 	finish
 endif
 
-" Recognize header
-syntax match mdH1 "\v^(# .*$\n\s*|[^#]+( \{.+\})?$\n\=\=+\s*)$" contains=mdLatexInlineEq,mdRefDef
-syntax match mdH2 "\v^(## .*$\n\s*|[^#]+( \{.+\})?$\n--+\s*)$" contains=mdLatexInlineEq,mdRefDef
-syntax match mdH3 "\v^### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
-syntax match mdH4 "\v^#### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
-syntax match mdH5 "\v^##### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
-syntax match mdH6 "\v^###### .*$\n\s*$" contains=mdLatexInlineEq,mdRefDef
-syntax match mdInvalidH "\v^#######+ .*$"
+" #b76935ff
+" #a56336ff
+" #935e38ff
+" #815839ff
+" #6f523bff
+" #5c4d3cff
+" #4a473eff
+" #38413fff
+" #263c41ff
+" #143642ff
 
-highlight mdH1 cterm=bold ctermfg=Red
-highlight mdH2 cterm=bold ctermfg=Red
-highlight mdH3 cterm=bold ctermfg=Red
-highlight mdH4 cterm=bold ctermfg=Red
-highlight mdH5 cterm=bold ctermfg=Red
-highlight mdH6 cterm=bold ctermfg=Red
-highlight link mdInvalidH Normal
+" Headers
+syntax match mdH1 "\v^(# .*$\n\s*|[^#]+( \{.+\})?$\n\=\=+\s*)$" contains=mdLatexInlineEq,mdRefDef
+syntax match mdH2 "\v^(## .*$\n\s*|[^#]+( \{.+\})?$\n--+\s*)$"  contains=mdLatexInlineEq,mdRefDef
+syntax match mdH3 "\v^### .*$\n\s*$"                            contains=mdLatexInlineEq,mdRefDef
+syntax match mdH4 "\v^#### .*$\n\s*$"                           contains=mdLatexInlineEq,mdRefDef
+syntax match mdH5 "\v^##### .*$\n\s*$"                          contains=mdLatexInlineEq,mdRefDef
+syntax match mdH6 "\v^###### .*$\n\s*$"                         contains=mdLatexInlineEq,mdRefDef
+syntax match mdInvalidH "\v^#######+ .*$"
 
 " Strikethrough, quote, code
 " Bold, Italic
@@ -27,22 +30,11 @@ syntax region mdStrikeThrough concealends matchgroup=mdFormat start="\v\~\~"    
 syntax region mdInlineCode    concealends matchgroup=mdFormat start="\v`"         end="\v`"
 syntax region mdQuote         concealends matchgroup=mdFormat start="\v\> "       end="\v$" oneline
 
-
-highlight link mdFormat   Normal
-highlight mdItalic        cterm=italic
-highlight mdBold          cterm=bold
-highlight mdStrikeThrough cterm=strikethrough
-highlight mdInlineCode    ctermfg=Red
-highlight mdQuote         ctermfg=Grey
-
 " Lists
 syntax match mdList "\v^\s*(* |\+ |(\d|#)\. |- (\[(\s|X|x)\])?)"
-highlight mdList      ctermfg=Red
 
 " Block of code
 syntax region mdBlockCode start="\v```" end="\v```" fold
-
-highlight mdBlockCode ctermfg=Red
 
 " C/C++ code in code blocks
 syntax include @c syntax/cpp.vim
@@ -50,26 +42,13 @@ syntax region mdBlockCode start="\v```(c|cpp)" end="\v```" fold contains=@c keep
 unlet! b:current_syntax
 
 " Links
-" TODO: option syntax inside {} / for titles too
-syntax match mdLink "\v\[.+\]\(.+\)( \{.+\})?" contains=mdUrl,mdText
-" TODO: improve url and text regexp
-syntax match mdText "\v[^\(\)\[\]!\{\}#]+" contained
+syntax match mdLink "\v\[.+\]\(.+\)( \{.+\})?" contains=mdUrl,mdText,mdRefDef " TODO: option syntax inside {} / for titles too
+syntax match mdText "\v[^\(\)\[\]!\{\}#]+"     contained " TODO: improve url and text regexp
 syntax match mdUrl "\v(https?://)?(www.)?[-a-zA-Z0-9_]{1,256}(\.[a-zA-Z_]{1,6})+(/[-a-zA-Z0-9_]+)*/?" contained
 
-highlight mdLink       ctermfg=Red
-highlight mdUrl        cterm=underline ctermfg=Cyan
-highlight link mdText  Normal
-
 " Images
-syntax match mdImage "\v!\[.+\]\(.+\)( \{.+\})?" contains=mdPath,mdText,mdOptionBrackets
-" TODO: should space be escaped ?
-syntax match  mdPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+"  contained
-syntax region mdOptionBrackets start="\v\s\{" end="\v\}" contained containedin=mdImage oneline contains=mdText
-
-highlight mdOptionBrackets ctermfg=Red
-highlight mdImage          ctermfg=Red
-highlight mdPath           ctermfg=Cyan
-highlight link mdText      Normal
+syntax match mdImage "\v!\[.+\]\(.+\)( \{.+\})?" contains=mdPath,mdText,mdRefDef
+syntax match  mdPath "\v(/|\~/)?([-_0-9a-zA-Z]+/)*([-A-Za-z_0-9]|\\ )+\.[a-zA-Z0-9]+"  contained " TODO: should space be escaped ?
 
 " Tables
 " TODO: is it possible to handle column width ?
@@ -82,50 +61,80 @@ syntax region mdTableHeader start="\v\+(-+\+)+\s*$" end="\v\+(\=+\+)+\s*$" conta
 syntax match mdTableText       "\v[^\|\-\+\=]+" contained containedin=mdTableRow contains=mdLatexInlineEq
 syntax match mdTableHeaderText "\v[^\|\-\+\=]+" contained containedin=mdTableHeader
 
-highlight mdTableHeader     ctermfg=Green
-highlight mdTableRow        ctermfg=Gray
-highlight mdTableText       ctermfg=Blue
-highlight mdTableHeaderText ctermfg=Red
-
 " Import LaTeX syntax
-syntax include @tex syntax/tex.vim
+if get(g:, 'vim_markdown_latex', 0)
+	syntax include @tex syntax/tex.vim
 
-" Math
-syntax region mdLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$" contains=@tex keepend
-syntax region mdLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$" contains=@tex keepend
+	" Math
+	syntax region mdLatexInlineEq start="\v\$([^\$]|\\)" end="\v\$" contains=@tex keepend
+	syntax region mdLatexEquation start="\v\$\$([^\$]|\\)" end="\v\$\$" contains=@tex keepend
 
-" begin/end LaTeX env/function
-syntax match mdLatexFunc "\v\\[a-z]+(\{(.+)?\})?" contains=@tex keepend
-syntax region mdLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}" contains=@tex keepend
+	" begin/end LaTeX env/function
+	syntax match mdLatexFunc "\v\\[a-z]+(\{(.+)?\})?" contains=@tex keepend
+	syntax region mdLatexEnv start="\v\\begin\{.*\}" end="\v\\end\{.*\}" contains=@tex keepend
 
-unlet! b:current_syntax
+	unlet! b:current_syntax
+endif
 
 " references: [@sec:...], @eq:..., [@fig:...], [@...:...]
-syntax match mdCiteProcRef "\v\[\@\S+\]"             contains=mdRefText
-syntax match mdCrossRef    "\v\[-?\@[a-z]+:\S+\]"    contains=mdRefText,mdRefKeyword
-syntax match mdRefDef      "\v\{#[a-z]+:.+\}"        contains=mdRefText,mdRefKeyword
-syntax match mdRefText     "\v[-0-9A-Za-z]+"         contained containedin=mdCiteProcRef,mdCrossRef contains=mdRefKeyword
-syntax match mdEqnosRef    "\v\@[a-z]+:[-a-zA-Z0-9]+" contains=mdRefKeyword,mdRefText
-
-syntax keyword mdRefKeyword eq sec fig contained containedin=mdRefText
-
-highlight mdCiteProcRef ctermfg=Yellow
-highlight mdCrossRef    ctermfg=Yellow
-highlight mdRefDef      ctermfg=Yellow
-highlight mdEqnosRef    ctermfg=Yellow
-
-highlight mdRefText     ctermfg=Cyan
-highlight mdRefKeyword  ctermfg=Gray
+syntax match   mdCiteProcRef "\v\[\@\S+\]"              contains=mdRefText
+syntax match   mdCrossRef    "\v\[-?\@[a-z]+:\S+\]"     contains=mdRefText,mdRefKeyword
+syntax match   mdRefDef      "\v\{#[a-z]+:.+\}"         contains=mdRefText,mdRefKeyword
+syntax match   mdRefText     "\v[-0-9A-Za-z]+"          contains=mdRefKeyword contained containedin=mdCiteProcRef,mdCrossRef
+syntax match   mdEqnosRef    "\v\@[a-z]+:[-a-zA-Z0-9]+" contains=mdRefKeyword,mdRefText
+syntax keyword mdRefKeyword  eq sec fig                 containedin=mdRefText contained
 
 " YAML metadata
-syntax include @yamlTop syntax/yaml.vim
-" syn region Comment matchgroup=mkdDelimiter start="\%^---$" end="^\(---\|\.\.\.\)$" contains=@yamlTop keepend
-syntax region mdYamlMetadata start="\v%^---\s*$" end="\v^---\s*$" contains=@yamlTop keepend
-unlet! b:current_syntax
+if get(g:, 'vim_markdown_yaml', 0)
+	syntax include @yamlTop syntax/yaml.vim
+	" syn region Comment matchgroup=mkdDelimiter start="\%^---$" end="^\(---\|\.\.\.\)$" contains=@yamlTop keepend
+	syntax region mdYamlMetadata start="\v%^---\s*$" end="\v^---\s*$" contains=@yamlTop keepend
+	unlet! b:current_syntax
+endif
 
 " HTML
 syntax include @html syntax/html.vim
 syntax region mdHTML start="\v\<" end="\v\>" contains=@html keepend
 unlet! b:current_syntax
+
+highlight link mdH1 markdownH1
+highlight link mdH2 markdownH2
+highlight link mdH3 markdownH3
+highlight link mdH4 markdownH4
+highlight link mdH5 markdownH5
+highlight link mdH6 markdownH6
+highlight link mdInvalidH Normal
+
+highlight mdItalic        cterm=italic
+highlight mdBold          cterm=bold
+highlight mdStrikeThrough cterm=strikethrough
+
+highlight link mdQuote  PreProc
+highlight link mdFormat Normal
+highlight link mdList   Label
+
+highlight link mdInlineCode Comment
+highlight link mdBlockCode  mdInlineCode
+
+highlight link mdSpecialChar Statement
+highlight link mdImage       mdSpecialChar
+highlight link mdLink        mdSpecialChar
+highlight link mdText        Normal
+
+highlight link mdUrl  Underlined
+highlight link mdPath StorageClass
+
+highlight mdTableHeader     ctermfg=Green
+highlight mdTableRow        ctermfg=Gray
+highlight mdTableText       ctermfg=Blue
+highlight mdTableHeaderText ctermfg=Red
+
+highlight mdCiteProcRef ctermfg=Yellow
+highlight mdCrossRef    ctermfg=Yellow
+highlight mdEqnosRef    ctermfg=Yellow
+
+highlight mdRefDef     ctermfg=Yellow
+highlight mdRefText    ctermfg=Cyan
+highlight mdRefKeyword ctermfg=Gray
 
 let b:current_syntax = "markdown"

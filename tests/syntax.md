@@ -28,7 +28,7 @@ __more bold__
 *italic*
 _more italic_
 ~~strikethrough~~
-`Some inline code`
+`Some inlined code`
 > this is a quote
 
 _this is
@@ -67,8 +67,8 @@ int main(int argc, char** argv) {
 | $1 + 1$       |     Text        |        Text    |
 +---------------+-----------------+----------------+
 
-[link](https://www.some-link.rezometz.org/to-to/ti_ti/)
-![image](some-image.jpeg)
+[link](https://www.some-link.rezometz.org/to-to/ti_ti/) {toto}
+![image](some-image.jpeg) {option}
 ![image](/fu-ll/pa_th/to/some-image.jpeg)
 ![image](~/path/from/home/some-image.jpeg)
 ![image](relative/path/to/some-image.jpeg)
