@@ -8,8 +8,6 @@ string: "a string"
 H1 {#sec:this}
 ==
 
-Bonjour, ceci fait référence à [@sec:ref].
-
 ## H2 $\alpha$
 
 H2 {#sec:ref2}

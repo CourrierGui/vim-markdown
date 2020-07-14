@@ -12,6 +12,7 @@ setlocal spell
 setlocal spelllang=fr,en
 
 function! OpenCompletion()
+	let col = col('.')
 	if !pumvisible() && ((v:char >= 'a' && v:char <= 'z') || (v:char >= 'A' && v:char <= 'Z'))
 		call feedkeys("\<C-n>", "n")
 	elseif !pumvisible() && v:char == '@'
@@ -34,13 +35,12 @@ function! CompleteReferences(findstart, base)
 		endwhile
 		return start
 	else
-		" find months matching with "a:base"
 		let res = []
 		let lnr=1
 		let line=getline(lnr)
-		while (lnr < 118)
+		while (lnr <= line('$'))
 			" TODO: add [-@...] and other
-			let reference_list = matchlist(line, '\v\{#([-A-Za-z0-9:]+)(\s.*)?\}')
+			let reference_list = matchlist(line, '\v\{#' . a:base . '([-A-Za-z0-9:]+)(\s.*)?\}')
 
 			if len(reference_list) >= 2
 				let reference = reference_list[1]
