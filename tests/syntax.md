@@ -8,6 +8,8 @@ string: "a string"
 H1 {#sec:this}
 ==
 
+Bonjour, ceci fait référence à [@sec:ref].
+
 ## H2 $\alpha$
 
 H2 {#sec:ref2}
@@ -88,7 +90,7 @@ bonjour
 $\sum_{j=1}^n a_i$
 
 text
-$$1$$
+$$1$$ {#eq:equation}
 text
 
 \begin{algin*}
