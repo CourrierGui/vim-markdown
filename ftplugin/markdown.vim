@@ -8,8 +8,8 @@ let g:vim_markdown_yaml=1
 let g:vim_markdown_latex=1
 
 " Dictionary autocompletion
-setlocal spell
-setlocal spelllang=fr,en
+" setlocal spell
+" setlocal spelllang=fr,en
 
 function! OpenCompletion()
 	let col = col('.')-1
@@ -56,16 +56,16 @@ function! CompleteReferences(findstart, base)
 	endif
 endfunction
 
-augroup completion
-	autocmd!
-	autocmd InsertCharPre * call OpenCompletion()
-augroup END
+" augroup completion
+" 	autocmd!
+" 	autocmd InsertCharPre * call OpenCompletion()
+" augroup END
 
-inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : call OpenCompletion()
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : call OpenCompletion()
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-setlocal completefunc=CompleteReferences
-setlocal complete=kspell
-setlocal completeopt+=menuone,noselect,noinsert
-setlocal pumheight=10
+" setlocal completefunc=CompleteReferences
+" setlocal complete=kspell
+" setlocal completeopt+=menuone,noselect,noinsert
+" setlocal pumheight=10
